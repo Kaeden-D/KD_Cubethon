@@ -1,5 +1,7 @@
+using Chapter.Singleton;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerMovement1 : MonoBehaviour
@@ -12,6 +14,17 @@ public class PlayerMovement1 : MonoBehaviour
     public float sideway_force;
 
     public bool grav = true;
+
+    private Invoker _invoker;
+    private Command _Left, _Right;
+
+    private void Start()
+    {
+        _invoker = FindObjectOfType<Invoker>();
+
+        _Left = new Left(this);
+        _Right = new Right(this);
+    }
 
     private void FixedUpdate()
     {
@@ -28,6 +41,7 @@ public class PlayerMovement1 : MonoBehaviour
         {
 
             rb.AddForce(sideway_force * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            _invoker.ExecuteCommand(_Right);
 
         }
 
@@ -35,6 +49,7 @@ public class PlayerMovement1 : MonoBehaviour
         {
 
             rb.AddForce(-sideway_force * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            _invoker.ExecuteCommand(_Left);
 
         }
 

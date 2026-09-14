@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,14 @@ public class GameManger : MonoBehaviour
     public GameObject completeLevelUI;
     public PlayerMovement1 player1;
     public PlayerMovement2 player2;
+
+    private Invoker _invoker;
+
+    private void Start()
+    {
+        _invoker = FindObjectOfType<Invoker>();
+        _invoker.refresh(this);
+    }
 
     public void CompleteLevel()
     {
@@ -67,6 +76,41 @@ public class GameManger : MonoBehaviour
 
         }
 
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.BeginArea(new Rect(10, 10, 200, 100));
+        if (!_invoker._isRecording && !_invoker._isReplaying)
+        {
+            if (GUILayout.Button("Start Recording"))
+            {
+                Restart();
+                _invoker._isReplaying = false;
+                _invoker._isRecording = true;
+                _invoker.Record();
+            }
+        }
+
+        if (_invoker._isRecording)
+        {
+            if (GUILayout.Button("Stop Recording"))
+            {
+                Restart();
+                _invoker._isRecording = false;
+            }
+        }
+
+        if (!_invoker._isRecording)
+        {
+            if (GUILayout.Button("Start Replay"))
+            {
+                _invoker._isRecording = false;
+                _invoker._isReplaying = true;
+                Restart();
+            }
+        }
+        GUILayout.EndArea();
     }
 
 }

@@ -1,3 +1,4 @@
+using Chapter.Singleton;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,17 @@ public class PlayerMovement2 : MonoBehaviour
 
     public bool grav = true;
 
+    private Invoker _invoker;
+    private Command _Up, _Down;
+
     private void Start()
     {
         rb.velocity = Vector3.zero;
+
+        _invoker = FindObjectOfType<Invoker>();
+
+        _Up = new Up(this);
+        _Down = new Down(this);
     }
 
     private void FixedUpdate()
@@ -33,6 +42,7 @@ public class PlayerMovement2 : MonoBehaviour
         {
 
             rb.AddForce(0, vertical_force * Time.deltaTime, 0, ForceMode.VelocityChange);
+            _invoker.ExecuteCommand(_Up);
 
         }
 
@@ -40,6 +50,7 @@ public class PlayerMovement2 : MonoBehaviour
         {
 
             rb.AddForce(0, -vertical_force * Time.deltaTime, 0, ForceMode.VelocityChange);
+            _invoker.ExecuteCommand(_Down);
 
         }
 
