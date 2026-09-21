@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Chapter.Observer;
 
 class Invoker : Chapter.Singleton.Singleton<Invoker>
 {
@@ -80,5 +81,7 @@ class Invoker : Chapter.Singleton.Singleton<Invoker>
         }
 
     }
+
+    public override void Notify(Subject subject) { }
 
 }

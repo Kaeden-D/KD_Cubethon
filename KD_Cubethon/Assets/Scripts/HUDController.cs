@@ -4,7 +4,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 namespace Chapter.Observer
 {
 
-    public class HUDController : Observer
+    public class HUDController : Chapter.Singleton.Singleton<HUDController>
     {
 
         private int player1Deaths = 0;
@@ -15,7 +15,7 @@ namespace Chapter.Observer
         void OnGUI()
         {
             GUILayout.BeginArea(
-                new Rect(50, 50, 100, 200));
+                new Rect(300, 20, 100, 200));
 
             GUILayout.BeginHorizontal("box");
             GUILayout.Label("Player 1 Deaths: " + player1Deaths);
