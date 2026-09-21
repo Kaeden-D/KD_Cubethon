@@ -1,8 +1,9 @@
+using Chapter.Observer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement2 : MonoBehaviour
+public class PlayerMovement2 : Subject
 {
 
     public Rigidbody rb;
